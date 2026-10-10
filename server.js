@@ -11,7 +11,17 @@ const port = 3001;
 const client = new Client({
     authStrategy: new LocalAuth(),
     puppeteer: {
-        args: ['--no-sandbox', '--disable-setuid-sandbox']
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--no-first-run',
+            '--no-zygote',
+            '--single-process', // Extremely important for 1GB RAM servers
+            '--disable-gpu'
+        ],
+        protocolTimeout: 300000 // 5 minutes timeout to prevent Runtime.callFunctionOn timed out
     }
 });
 
